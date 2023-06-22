@@ -35,11 +35,20 @@ void *handle_client(void *args) {
         // Generate random numbers for the question
         int num1 = rand() % 15 + 1;
         int num2 = rand() % 15 + 1;
-        int sum = num1 + num2;
+        char operator;
+        int sum;
+
+        if (rand() % 2 == 0) {
+            operator = '+';
+            sum = num1 + num2;
+        } else {
+            operator = '-';
+            sum = num1 - num2;
+        }
 
         // Compose the question
         char question[50];
-        sprintf(question, "Q%d: What is %d + %d?\n", total_questions + 1, num1, num2);
+        sprintf(question, "Q%d: What is %d %c %d?\n", total_questions + 1, num1, operator, num2);
 
         // Send the question to the client
         send(client_socket, question, strlen(question), 0);
